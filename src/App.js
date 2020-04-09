@@ -291,7 +291,7 @@ function App() {
                         onChange={(v) => setEmail(v.target.value)}
                       />
                       <ReCaptcha
-                        sitekey="your_site_key"
+                        sitekey="6LfMHOgUAAAAAF6jl3yj97aw_KhLwA5Br1iysFmI"
                         action="submit"
                         verifyCallback={captchaCallback}
                       />
