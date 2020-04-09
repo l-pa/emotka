@@ -301,6 +301,7 @@ function App() {
                         database.ref("emotesToApprove/").push(
                           {
                             title: emoteTitle,
+                            chat: emoteInChat,
                             imageURL: emoteImageURL,
                             audioURL: emoteAudioURL,
                             NSFW: NSFW,
