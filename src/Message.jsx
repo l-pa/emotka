@@ -10,9 +10,9 @@ function Message(props) {
     setGif([]);
 
     if (props.isEmoji) {
-      messageWidth.current = "50%";
+      messageWidth.current = "5vw";
     } else {
-      messageWidth.current = "100%";
+      messageWidth.current = "17vw";
     }
 
     if (props.isEmoji) {
@@ -25,10 +25,14 @@ function Message(props) {
             style={{ borderRadius: 5 }}
             alt={props.alt}
             onError={(err) => {
-              props.imgError(true);
+              if (props.imgError) {
+                props.imgError(true);
+              }
             }}
             onLoad={() => {
-              props.imgError(false);
+              if (props.imgError) {
+                props.imgError(false);
+              }
             }}
           />
         )
@@ -43,10 +47,14 @@ function Message(props) {
             style={{ borderRadius: 5 }}
             alt={props.alt}
             onError={(err) => {
-              props.imgError(true);
+              if (props.imgError) {
+                props.imgError(true);
+              }
             }}
             onLoad={() => {
-              props.imgError(false);
+              if (props.imgError) {
+                props.imgError(false);
+              }
             }}
           />
         )
@@ -55,7 +63,7 @@ function Message(props) {
   }, [props, props.alt, props.imageURL, props.isEmoji]);
 
   return (
-    <div className="message-box" style={{ marginLeft: 10, display: "grid" }}>
+    <div className="message-box" style={{ marginLeft: 0, display: "grid" }}>
       <div
         style={{
           paddingLeft: 10,
