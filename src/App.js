@@ -286,6 +286,7 @@ function App() {
                         ref={emailRef}
                         isInvalid={emailInvalid}
                         isRequired
+                        type="email"
                         variant="flushed"
                         placeholder="Email"
                         onChange={(v) => setEmail(v.target.value)}

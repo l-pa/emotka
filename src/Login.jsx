@@ -21,6 +21,10 @@ export default function Login(props) {
 
   const [buttonText, setButtonText] = useState("login");
 
+  const deleteEmote = (emoteId) => {
+    setToApprove((a) => a.filter((v) => v.id !== emoteId));
+  };
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
@@ -34,13 +38,27 @@ export default function Login(props) {
             .ref("emotesToApprove")
             .once("value")
             .then((res) => {
-              console.log(res.val());
+              for (const key in res.val()) {
+                console.log(key);
+                const temp = res.val()[key];
+                temp.id = key;
+                console.log(temp);
+                setToApprove((v) => [...v, temp]);
+              }
+              /*
+              //    console.log(res.val());
               const arrayOfObj = Object.entries(res.val()).map((e) => ({
                 [e[0]]: e[1],
               }));
-              console.log(arrayOfObj);
+              //   console.log(arrayOfObj);
 
-              setToApprove(Object.values(res.val()));
+              arrayOfObj.forEach((element) => {
+                for (const key in element) {
+                  console.log(key, res.val()[key]);
+                }
+              });
+*/
+              //    setToApprove(Object.values(res.val()));
               setError(false);
             })
             .catch((err) => {
@@ -93,7 +111,7 @@ export default function Login(props) {
       <Flex justifyContent="center" alignItems="center">
         <Grid templateColumns="repeat(4, 2fr)" gap={12}>
           {toApprove.map((v, i) => {
-            return <Approve key={i} item={v} />;
+            return <Approve key={i} item={v} delete={deleteEmote} />;
           })}
         </Grid>
       </Flex>

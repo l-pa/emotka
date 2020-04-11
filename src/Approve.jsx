@@ -1,6 +1,30 @@
 import React, { useState } from "react";
 import { Box, Image, Badge, Flex, Button } from "@chakra-ui/core";
 import Message from "./Message";
+
+import * as firebase from "firebase";
+
+function moveFbRecord(oldRef, newRef) {
+  return Promise((resolve, reject) => {
+    oldRef
+      .once("value")
+      .then((snap) => {
+        return newRef.set(snap.val());
+      })
+      .then(() => {
+        return oldRef.set(null);
+      })
+      .then(() => {
+        console.log("Done!");
+        resolve();
+      })
+      .catch((err) => {
+        console.log(err.message);
+        reject();
+      });
+  });
+}
+
 export default function Approve(props) {
   return (
     <Flex flexDirection="column" alignItems="space-between">
@@ -63,14 +87,43 @@ export default function Approve(props) {
               </Box>
             </Box>
             <Flex mt={5} justifyContent="space-between">
-              <Button variantColor="green" size="sm">
+              <Button
+                onClick={() => {
+                  console.log(props.item.id);
+
+                  firebase
+                    .database()
+                    .ref("emotesToApprove/" + props.item.id)
+                    .once("value")
+                    .then((res) => {
+                      console.log(res.val());
+                      firebase
+                        .database()
+                        .ref("emotes/")
+                        .push(res.val())
+                        .then((res) => {
+                          firebase
+                            .database()
+                            .ref("emotesToApprove/" + props.item.id)
+                            .remove();
+                          props.delete(props.item.id);
+                        });
+                    });
+                }}
+                variantColor="green"
+                size="sm">
                 Approve
               </Button>
               <Button
                 variantColor="red"
                 size="sm"
                 onClick={() => {
-                  //        firebase.database().ref("emotesToApprove/").remove();
+                  firebase
+                    .database()
+                    .ref("emotesToApprove/" + props.item.id)
+                    .remove();
+
+                  props.delete(props.item.id);
                 }}>
                 Delete
               </Button>
