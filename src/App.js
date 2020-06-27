@@ -75,7 +75,6 @@ function App() {
   const [emoteAudioURLInvalid, setEmoteAudioURLInvalid] = useState(false);
 
   const [NSFW, setNSFW] = useState(false);
-  const [isEmoji, setIsEmoji] = useState(false);
 
   const [submiting, setSubmiting] = useState(false);
 
@@ -93,7 +92,6 @@ function App() {
   const audioCheckboxRef = useRef();
   const audioUrlRef = useRef();
   const nsfwCheckboxRef = useRef();
-  const emojiCheckboxRef = useRef();
   const emailRef = useRef();
 
   useEffect(() => {
@@ -201,7 +199,12 @@ function App() {
               flexWrap="wrap"
               justifyContent="center"
               alignItems="center">
-              <Box maxW="sm" borderWidth="1px" rounded="lg" overflow="hidden">
+              <Box
+                mr={10}
+                maxW="sm"
+                borderWidth="1px"
+                rounded="lg"
+                overflow="hidden">
                 <Box p="6">
                   <Box d="flex" alignItems="baseline">
                     <Stack spacing={5}>
@@ -274,13 +277,6 @@ function App() {
                         variantColor="pink">
                         NSFW
                       </Checkbox>
-                      <Checkbox
-                        ref={emojiCheckboxRef}
-                        onChange={(v) => setIsEmoji(v.target.checked)}
-                        size="lg"
-                        variantColor="green">
-                        Emoji
-                      </Checkbox>
                       <Divider></Divider>
                       <Input
                         ref={emailRef}
@@ -309,7 +305,6 @@ function App() {
                                 imageURL: emoteImageURL,
                                 audioURL: emoteAudioURL,
                                 NSFW: NSFW,
-                                emote: isEmoji,
                                 createdBy: email,
                                 time: new Date(),
                               },
@@ -327,11 +322,9 @@ function App() {
                                   audioCheckboxRef.current.checked = false;
                                   audioUrlRef.current.value = "";
                                   nsfwCheckboxRef.current.checked = false;
-                                  emojiCheckboxRef.current.checked = false;
                                   emailRef.current.value = "";
 
                                   setEmoteImageURL(defaultGif);
-                                  setIsEmoji(false);
                                   setEmoteHasAudio(false);
                                   setEmoteAudioURL("");
                                   setErrorMessage("");
@@ -364,7 +357,6 @@ function App() {
                 background="linear-gradient(to top, #141e30, #243b55)"
                 imageURL={emoteImageURL}
                 audioURL={emoteAudioURL}
-                isEmoji={isEmoji}
                 alt={emoteTitle}
                 user={"Message from"}
                 userId={"User ID"}

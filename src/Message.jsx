@@ -4,63 +4,30 @@ import { Avatar, Row, Col } from "antd";
 function Message(props) {
   const [gif, setGif] = useState([]);
 
-  const messageWidth = useRef("50%");
-
   useEffect(() => {
     setGif([]);
-
-    if (props.isEmoji) {
-      messageWidth.current = "5vw";
-    } else {
-      messageWidth.current = "17vw";
-    }
-
-    if (props.isEmoji) {
-      setGif((gif) =>
-        gif.concat(
-          <img
-            src={props.imageURL}
-            width={"90px"}
-            height={"100%"}
-            style={{ borderRadius: 5 }}
-            alt={props.alt}
-            onError={(err) => {
-              if (props.imgError) {
-                props.imgError(true);
-              }
-            }}
-            onLoad={() => {
-              if (props.imgError) {
-                props.imgError(false);
-              }
-            }}
-          />
-        )
-      );
-    } else {
-      setGif((gif) =>
-        gif.concat(
-          <img
-            src={props.imageURL}
-            width={"200vw"}
-            height={"100%"}
-            style={{ borderRadius: 5 }}
-            alt={props.alt}
-            onError={(err) => {
-              if (props.imgError) {
-                props.imgError(true);
-              }
-            }}
-            onLoad={() => {
-              if (props.imgError) {
-                props.imgError(false);
-              }
-            }}
-          />
-        )
-      );
-    }
-  }, [props, props.alt, props.imageURL, props.isEmoji]);
+    setGif((gif) =>
+      gif.concat(
+        <img
+          src={props.imageURL}
+          width={"200vw"}
+          height={"100%"}
+          style={{ borderRadius: 5 }}
+          alt={props.alt}
+          onError={(err) => {
+            if (props.imgError) {
+              props.imgError(true);
+            }
+          }}
+          onLoad={() => {
+            if (props.imgError) {
+              props.imgError(false);
+            }
+          }}
+        />
+      )
+    );
+  }, [props, props.alt, props.imageURL]);
 
   return (
     <div className="message-box" style={{ marginLeft: 0, display: "grid" }}>
@@ -98,7 +65,7 @@ function Message(props) {
                 borderStyle: "solid",
                 borderColor: "#A9A9A9",
                 borderWidth: 1,
-                width: messageWidth.current,
+                width: "10em",
               }}>
               {(() => {
                 return (
@@ -107,7 +74,7 @@ function Message(props) {
                       return i;
                     })}
                     {
-                      <div style={{ wordBreak: "break-word", width: "200px" }}>
+                      <div style={{ wordBreak: "break-word", width: "9em" }}>
                         {props.alt}
                       </div>
                     }
